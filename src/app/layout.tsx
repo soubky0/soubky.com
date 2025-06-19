@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { baseUrl } from "./sitemap";
 import { Navbar } from "@/components/nav";
 import Footer from "@/components/footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -60,6 +61,7 @@ export default function RootLayout({
           </main>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-2LE5CS8E4H" />
     </html>
   );
 }
