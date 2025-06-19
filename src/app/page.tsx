@@ -9,7 +9,10 @@ export default function Page() {
   return (
     <section>
       <Avatar className="mb-4 h-24 w-24">
-        <AvatarImage src="https://github.com/soubky0.png" />
+        <AvatarImage
+          src="https://github.com/soubky0.png"
+          alt="Omar Soubky Avatar"
+        />
         <AvatarFallback>OS</AvatarFallback>
       </Avatar>
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
