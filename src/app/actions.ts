@@ -1,6 +1,6 @@
 "use server";
 
-import { GalleryImage } from "../app/gallery/types";
+import { GalleryImage } from "./gallery/types";
 
 interface UploadThingResponse {
   files: Array<{

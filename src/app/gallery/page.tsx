@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { Metadata } from "next";
-import { getUploadThingFiles } from "@/lib/actions";
+import { getUploadThingFiles } from "@/app/actions";
 import { GalleryImage } from "./types";
 
 export const metadata: Metadata = {
   title: "Gallery",
-  description: "Photo gallery showcasing various images",
+  description: "Photo gallery showcasing my favorite images",
 };
 
 export const generateStaticParams = async () => {
