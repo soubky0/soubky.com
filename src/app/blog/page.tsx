@@ -5,6 +5,10 @@ export const metadata = {
   description: "Read my blog.",
 };
 
+export const generateStaticParams = async () => {
+  return [];
+};
+
 export default function Page() {
   return (
     <section>

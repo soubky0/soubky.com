@@ -1,20 +1,26 @@
 import { notFound } from "next/navigation";
-import { CustomMDX } from "@/components/mdx";
 import { formatDate, getBlogPosts } from "@/app/blog/utils";
 import { baseUrl } from "@/app/sitemap";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Metadata } from "next";
+import { CustomMDX } from "@/components/mdx";
 
 export async function generateStaticParams() {
   const posts = getBlogPosts();
-
   return posts.map((post) => ({
     slug: post.slug,
   }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = getBlogPosts().find((post) => post.slug === params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = getBlogPosts().find((post) => post.slug === resolvedParams.slug);
   if (!post) {
-    return;
+    return {};
   }
 
   const {
@@ -51,8 +57,13 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function Blog({ params }: { params: { slug: string } }) {
-  const post = getBlogPosts().find((post) => post.slug === params.slug);
+export default async function BlogPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const resolvedParams = await params;
+  const post = getBlogPosts().find((post) => post.slug === resolvedParams.slug);
 
   if (!post) {
     notFound();
@@ -76,7 +87,7 @@ export default function Blog({ params }: { params: { slug: string } }) {
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
             url: `${baseUrl}/blog/${post.slug}`,
             author: {
-              "@type": "Omar Soubky",
+              "@type": "Person",
               name: "Omar Soubky",
             },
           }),
@@ -85,6 +96,13 @@ export default function Blog({ params }: { params: { slug: string } }) {
       <h1 className="title font-semibold text-2xl tracking-tighter">
         {post.metadata.title}
       </h1>
+      <div className="flex items-center gap-2 my-4">
+        <Avatar>
+          <AvatarImage src="https://github.com/soubky0.png" />
+          <AvatarFallback>OS</AvatarFallback>
+        </Avatar>
+        <p className="tracking-tighter">Omar Soubky</p>
+      </div>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}
